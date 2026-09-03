@@ -5,6 +5,9 @@ pipeline {
         maven 'Maven-3.9.16'
     }
 
+    environment {
+        DOCKER_PATH = 'C:\\Users\\kaush\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin'
+    }
     stages {
 
         stage('Checkout') {
@@ -29,11 +32,11 @@ pipeline {
         }
 
         stage('Docker Build') {
-            steps {
-                echo 'Building Docker image...'
-                bat 'docker build -t cicd-app .'
-            }
-        }
+    steps {
+        echo 'Building Docker image...'
+        bat 'set PATH=%DOCKER_PATH%;%PATH% && docker build -t cicd-app .'
+    }
+}
 
         stage('Docker Deploy') {
             steps {
