@@ -8,6 +8,7 @@ pipeline {
     environment {
         DOCKER_PATH = 'C:\\Users\\kaush\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin'
     }
+
     stages {
 
         stage('Checkout') {
@@ -32,22 +33,23 @@ pipeline {
         }
 
         stage('Docker Build') {
-    steps {
-        echo 'Building Docker image...'
-        bat 'set PATH=%DOCKER_PATH%;%PATH% && docker build -t cicd-app .'
-    }
-}
+            steps {
+                echo 'Building Docker image...'
+                bat 'set PATH=%DOCKER_PATH%;%PATH% && docker build -t cicd-app .'
+            }
+        }
 
-       stage('Docker Deploy') {
-    steps {
-        echo 'Deploying Docker container...'
-        bat '''
-            set PATH=%DOCKER_PATH%;%PATH%
-            docker rm -f cicd-container 2>nul
-            docker run --name cicd-container cicd-app
-        '''
+        stage('Docker Deploy') {
+            steps {
+                echo 'Deploying Docker container...'
+                bat '''
+                    set PATH=%DOCKER_PATH%;%PATH%
+                    docker rm -f cicd-container 2>nul
+                    docker run --name cicd-container cicd-app
+                '''
+            }
+        }
     }
-}
 
     post {
         success {
