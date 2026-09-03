@@ -4,6 +4,9 @@ pipeline {
     tools {
         maven 'Maven-3.9.16'
     }
+
+    stages {
+
         stage('Checkout') {
             steps {
                 echo 'Checking out source code from GitHub...'
@@ -36,7 +39,7 @@ pipeline {
             steps {
                 echo 'Deploying Docker container...'
                 bat '''
-                    docker rm -f cicd-container 2>nul || exit /b 0
+                    docker rm -f cicd-container 2>nul
                     docker run --name cicd-container cicd-app
                 '''
             }
